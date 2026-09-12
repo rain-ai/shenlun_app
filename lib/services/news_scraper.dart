@@ -334,7 +334,7 @@ class NewsScraper {
         final prompt = '用50字以内摘要以下新闻核心内容，只输出摘要：${item.title}';
         final r = await http.post(Uri.parse('https://api.deepseek.com/v1/chat/completions'),
           headers: {'Content-Type':'application/json','Authorization':'Bearer $apiKey'},
-          body: jsonEncode({'model':'deepseek-chat','messages':[{'role':'user','content':prompt}],'temperature':0.3,'max_tokens':100}),
+          body: jsonEncode({'model':'deepseek-v4-flash','messages':[{'role':'user','content':prompt}],'temperature':0.3,'max_tokens':100}),
         ).timeout(const Duration(seconds: 10));
         if (r.statusCode == 200) {
           item.content = (jsonDecode(r.body)['choices']?[0]?['message']?['content'] as String?) ?? '';

@@ -1,4 +1,4 @@
-/// OCR 识图服务
+﻿/// OCR 识图服务
 /// 通过 DeepSeek Vision API 提取图片中的文字
 import 'dart:convert';
 import 'dart:io';
@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class OcrService {
   static const _endpoint = 'https://api.deepseek.com/v1/chat/completions';
-  static const _model = 'deepseek-chat';
+  static const _model = 'deepseek-v4-flash';
 
   /// 从图片路径提取文字，返回提取结果；失败返回 null
   static Future<String?> extractText({

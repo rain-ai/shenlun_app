@@ -1,4 +1,4 @@
-/// 申论模拟题 AI 生成器
+﻿/// 申论模拟题 AI 生成器
 /// 根据主题内容，按真实考试格式生成给定资料+作答要求
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -7,7 +7,7 @@ import 'mock_exam_service.dart';
 
 class MockExamGenerator {
   static const _endpoint = 'https://api.deepseek.com/v1/chat/completions';
-  static const _model = 'deepseek-chat';
+  static const _model = 'deepseek-v4-flash';
 
   /// 题型标签（用户可选）
   static const questionTypeLabels = {

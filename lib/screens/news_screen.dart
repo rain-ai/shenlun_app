@@ -824,7 +824,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
         'Authorization': 'Bearer $apiKey',
       },
       body: jsonEncode({
-        'model': 'deepseek-chat',
+        'model': 'deepseek-v4-flash',
         'messages': [
           {'role': 'system', 'content': '你是申论考试时政分析专家。请分析以下新闻，提取3-5个最核心要点和关键政策术语，适合申论备考使用。格式：先列出核心要点（每条用"•"开头），再列出关键术语。'},
           {'role': 'user', 'content': '标题：$title\n\n正文：${content.length > 2000 ? content.substring(0, 2000) : content}'},

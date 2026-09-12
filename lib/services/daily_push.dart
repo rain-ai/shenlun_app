@@ -79,7 +79,7 @@ class DailyPushService {
             'Authorization': 'Bearer $apiKey',
           },
           body: jsonEncode({
-            'model': 'deepseek-chat',
+            'model': 'deepseek-v4-flash',
             'messages': [
               {'role': 'system', 'content': '你是央视新闻编辑。根据以下今日新闻标题，写一段150字以内的新闻摘要，像新闻联播口播一样流畅自然，突出3-4个最重要的新闻点。每一条新闻单独一行，用"• "开头。再选一个主题色（#E94560红/#4A90D9蓝/#2ECC71绿/#F5A623橙/#A29BFE紫）。输出JSON：{"summary":"摘要","color":"#RRGGBB"}'},
               {'role': 'user', 'content': content.length > 2000 ? content.substring(0, 2000) : content},

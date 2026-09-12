@@ -1728,7 +1728,7 @@ Widget _qToolBtn(String icon, String mode) {
           'Authorization': 'Bearer $apiKey',
         },
         body: jsonEncode({
-          'model': 'deepseek-chat',
+          'model': 'deepseek-v4-flash',
           'messages': [
             {'role': 'system', 'content': _teacherSystemPrompt(teacher)},
             {'role': 'user', 'content': prompt},

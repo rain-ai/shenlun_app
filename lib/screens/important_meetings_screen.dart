@@ -282,7 +282,7 @@ class _ImportantMeetingsScreenState extends State<ImportantMeetingsScreen>
           'Authorization': 'Bearer $apiKey',
         },
         body: jsonEncode({
-          'model': 'deepseek-chat',
+          'model': 'deepseek-v4-flash',
           'messages': [
             {'role': 'system', 'content': '你是申论备考专家，熟悉中国政治会议。只返回JSON，不返回其他内容。'},
             {'role': 'user', 'content': prompt},
@@ -395,7 +395,7 @@ class _ImportantMeetingsScreenState extends State<ImportantMeetingsScreen>
           'Authorization': 'Bearer $apiKey',
         },
         body: jsonEncode({
-          'model': 'deepseek-chat',
+          'model': 'deepseek-v4-flash',
           'messages': [
             {'role': 'system', 'content': '你是申论备考专家，熟悉中国社会治理创新概念。只返回JSON，不返回其他内容。'},
             {'role': 'user', 'content': prompt},
@@ -521,7 +521,7 @@ class _ImportantMeetingsScreenState extends State<ImportantMeetingsScreen>
           'Authorization': 'Bearer $apiKey',
         },
         body: jsonEncode({
-          'model': 'deepseek-chat',
+          'model': 'deepseek-v4-flash',
           'messages': [
             {'role': 'system', 'content': '你是申论辅导专家，擅长从时政概念中深度挖掘命题角度和应试策略。回答要具体实用，不泛泛而谈。'},
             {'role': 'user', 'content': prompt},

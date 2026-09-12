@@ -37,7 +37,7 @@ class OutlineScoreResult {
 
 class AIScorer {
   static const _endpoint = 'https://api.deepseek.com/v1/chat/completions';
-  static const _model = 'deepseek-chat';
+  static const _model = 'deepseek-v4-flash';
 
   /// 从 DeepSeek API 评分，失败则返回 null（由调用方降级到本地评分）
   static Future<ScoreResult?> score({

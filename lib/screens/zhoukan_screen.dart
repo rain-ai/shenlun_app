@@ -314,7 +314,7 @@ class _ZhoukanScreenState extends State<ZhoukanScreen>
       final prompt = '你是申论备考专家。请分析以下时政新闻，提取2-3个申论考点，用50字以内总结核心要点，帮助申论备考。\n\n标题：${item.title}\n内容：${content.isNotEmpty ? content.substring(0, (content.length).clamp(0, 1500)) : item.summary}';
       final r = await http.post(Uri.parse('https://api.deepseek.com/v1/chat/completions'),
         headers: {'Content-Type':'application/json','Authorization':'Bearer $apiKey'},
-        body: jsonEncode({'model':'deepseek-chat','messages':[{'role':'system','content':'你是申论辅导专家。回复简洁，200字以内。'},{'role':'user','content':prompt}],'temperature':0.5,'max_tokens':300}),
+        body: jsonEncode({'model':'deepseek-v4-flash','messages':[{'role':'system','content':'你是申论辅导专家。回复简洁，200字以内。'},{'role':'user','content':prompt}],'temperature':0.5,'max_tokens':300}),
       ).timeout(const Duration(seconds: 20));
       if (dialogActive) { Navigator.pop(context); dialogActive = false; }
       if (r.statusCode == 200) {

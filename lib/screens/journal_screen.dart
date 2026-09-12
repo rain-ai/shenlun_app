@@ -188,7 +188,7 @@ class _JournalScreenState extends State<JournalScreen> {
         'Authorization': 'Bearer $apiKey',
       },
       body: jsonEncode({
-        'model': 'deepseek-chat',
+        'model': 'deepseek-v4-flash',
         'messages': [
           {'role': 'system', 'content': '你是素材整理助手。根据以下笔记内容，按主题分类（如：政治理论、经济发展、民生保障、生态环保、文化教育、科技人才等），为每段内容标注最合适的分类。每行输出格式：分类：内容前20字。只输出分类结果，不要其他说明。'},
           {'role': 'user', 'content': contents.length > 3000 ? contents.substring(0, 3000) : contents},

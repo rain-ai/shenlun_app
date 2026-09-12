@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../database/db_helper.dart';
@@ -41,7 +41,7 @@ class _State extends State<PaperPracticeScreen> {
         final p = '申论阅卷专家。评分0-100，20字评语。\n题型:${q['question_type']}\n【材料+题】\n${_trim(q['content'] as String? ?? '', 2000)}\n【参考】\n${_trim(q['reference_answer'] as String? ?? '', 1000)}\n【作答】\n$ans\nJSON:{"score":数字,"comment":"评语"}';
         final r = await http.post(Uri.parse('https://api.deepseek.com/v1/chat/completions'),
           headers: {'Content-Type':'application/json','Authorization':'Bearer $key'},
-          body: jsonEncode({'model':'deepseek-chat','messages':[{'role':'system','content':'只返回JSON'},{'role':'user','content':p}],'temperature':0.3,'max_tokens':150}),
+          body: jsonEncode({'model':'deepseek-v4-flash','messages':[{'role':'system','content':'只返回JSON'},{'role':'user','content':p}],'temperature':0.3,'max_tokens':150}),
         ).timeout(const Duration(seconds: 25));
         if (r.statusCode == 200) {
           final t = (jsonDecode(r.body)['choices']?[0]?['message']?['content'] as String?) ?? '';
@@ -187,7 +187,7 @@ ${_formatHistoryAnswers(a1)}
 请简要分析：1.进步点 2.仍存在的问题 3.下一步建议。200字以内。''';
       final r = await http.post(Uri.parse('https://api.deepseek.com/v1/chat/completions'),
         headers: {'Content-Type':'application/json','Authorization':'Bearer $key'},
-        body: jsonEncode({'model':'deepseek-chat','messages':[{'role':'user','content':prompt}],'temperature':0.5,'max_tokens':400}),
+        body: jsonEncode({'model':'deepseek-v4-flash','messages':[{'role':'user','content':prompt}],'temperature':0.5,'max_tokens':400}),
       ).timeout(const Duration(seconds: 20));
       if (r.statusCode == 200) {
         _compareResult = (jsonDecode(r.body)['choices']?[0]?['message']?['content'] as String?) ?? '分析失败';
@@ -216,7 +216,7 @@ ${_formatHistoryAnswers(a1)}
       final r = await http.post(Uri.parse('https://api.deepseek.com/v1/chat/completions'),
         headers: {'Content-Type':'application/json','Authorization':'Bearer $key'},
         body: jsonEncode({
-          'model':'deepseek-chat','messages':[{'role':'user','content':prompt}],
+          'model':'deepseek-v4-flash','messages':[{'role':'user','content':prompt}],
           'temperature':0.5,'max_tokens':800,
         }),
       ).timeout(const Duration(seconds: 20));
@@ -389,7 +389,7 @@ ${_formatHistoryAnswers(a1)}
     for (int i = 0; i < widget.questions.length; i++) {
       final q = widget.questions[i];
       try {
-        final r = await http.post(Uri.parse('https://api.deepseek.com/v1/chat/completions'), headers: {'Content-Type':'application/json','Authorization':'Bearer $key'}, body: jsonEncode({'model':'deepseek-chat','messages':[{'role':'system','content':'申论辅导专家，200字分析得分点和改进建议'},{'role':'user','content':'题型:${q['question_type']}\n【参考】\n${_trim(q['reference_answer'] as String? ?? '', 1500)}'}],'temperature':0.5,'max_tokens':300})).timeout(const Duration(seconds: 20));
+        final r = await http.post(Uri.parse('https://api.deepseek.com/v1/chat/completions'), headers: {'Content-Type':'application/json','Authorization':'Bearer $key'}, body: jsonEncode({'model':'deepseek-v4-flash','messages':[{'role':'system','content':'申论辅导专家，200字分析得分点和改进建议'},{'role':'user','content':'题型:${q['question_type']}\n【参考】\n${_trim(q['reference_answer'] as String? ?? '', 1500)}'}],'temperature':0.5,'max_tokens':300})).timeout(const Duration(seconds: 20));
         _alz!.add(r.statusCode == 200 ? ((jsonDecode(r.body)['choices']?[0]?['message']?['content'] as String?) ?? '分析失败') : '分析失败');
       } catch (_) { _alz!.add('分析失败'); }
       if (mounted && i % 2 == 0) setState(() {});

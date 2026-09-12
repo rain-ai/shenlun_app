@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -85,7 +85,7 @@ $material
         Uri.parse('https://api.deepseek.com/v1/chat/completions'),
         headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $apiKey'},
         body: jsonEncode({
-          'model': 'deepseek-chat',
+          'model': 'deepseek-v4-flash',
           'messages': [
             {'role': 'system', 'content': _gradingSystemPrompt},
             {'role': 'user', 'content': prompt},

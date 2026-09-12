@@ -121,7 +121,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
       final r = await http.post(
         Uri.parse('https://api.deepseek.com/v1/chat/completions'),
         headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $apiKey'},
-        body: jsonEncode({'model': 'deepseek-chat', 'messages': [
+        body: jsonEncode({'model': 'deepseek-v4-flash', 'messages': [
           {'role': 'system', 'content': '你是申论辅导专家。回复简洁，200字以内。'},
           {'role': 'user', 'content': prompt},
         ], 'temperature': 0.3, 'max_tokens': 400}),

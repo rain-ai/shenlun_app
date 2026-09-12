@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -95,7 +95,7 @@ class _CommentaryExerciseScreenState extends State<CommentaryExerciseScreen> {
     try {
       final r = await http.post(Uri.parse('https://api.deepseek.com/v1/chat/completions'),
         headers: {'Content-Type':'application/json','Authorization':'Bearer $key'},
-        body: jsonEncode({'model':'deepseek-chat','messages':[{'role':'user','content':'请为以下新闻写一篇${_wordLimit}字以内的简评：\n${_article?['body'] ?? ''}'}],'temperature':0.5,'max_tokens':300}),
+        body: jsonEncode({'model':'deepseek-v4-flash','messages':[{'role':'user','content':'请为以下新闻写一篇${_wordLimit}字以内的简评：\n${_article?['body'] ?? ''}'}],'temperature':0.5,'max_tokens':300}),
       ).timeout(const Duration(seconds: 12));
       if (r.statusCode == 200) {
         final ans = jsonDecode(r.body)['choices']?[0]?['message']?['content'] as String? ?? '';
@@ -115,7 +115,7 @@ class _CommentaryExerciseScreenState extends State<CommentaryExerciseScreen> {
       final r = await http.post(Uri.parse('https://api.deepseek.com/v1/chat/completions'),
         headers: {'Content-Type':'application/json','Authorization':'Bearer $key'},
         body: jsonEncode({
-          'model':'deepseek-chat','messages':[{'role':'user','content':'你是时政评论编辑。严格打分：\n- 不切题或太短：20-40分\n- 切题但平淡：40-60分\n- 有观点：60-80分\n- 观点深刻语言精炼：80-100分\n\n新闻：${_article?['body'] ?? ''}\n用户简评：$text\n严格用JSON：{"score":数字,"comment":"20字点评"}'}],
+          'model':'deepseek-v4-flash','messages':[{'role':'user','content':'你是时政评论编辑。严格打分：\n- 不切题或太短：20-40分\n- 切题但平淡：40-60分\n- 有观点：60-80分\n- 观点深刻语言精炼：80-100分\n\n新闻：${_article?['body'] ?? ''}\n用户简评：$text\n严格用JSON：{"score":数字,"comment":"20字点评"}'}],
           'temperature':0.3,'max_tokens':200,
         }),
       ).timeout(const Duration(seconds: 15));

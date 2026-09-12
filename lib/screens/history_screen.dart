@@ -16,6 +16,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   bool _loading = true;
 
   void _openQuestionDetail(_QuestionGroup group) {
+    if (group.isCustom) return;
     Navigator.push(context, MaterialPageRoute(builder: (_) => QuestionDetailScreen(
       questionId: group.questionId,
       questionType: group.questionType,
@@ -68,9 +69,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
         if (!map.containsKey(qid)) {
           map[qid] = _QuestionGroup(
             questionId: qid,
-            title: r['title'] as String? ?? '',
-            questionType: r['question_type'] as String? ?? '',
-            referenceAnswer: r['reference_answer'] as String? ?? '',
+            title: _recordTitle(r),
+            questionType: _recordQuestionType(r),
+            referenceAnswer:
+                r['reference_answer'] as String? ??
+                r['ai_answer'] as String? ??
+                '',
           );
         }
         map[qid]!.attempts.add(r);
@@ -90,6 +94,29 @@ class _HistoryScreenState extends State<HistoryScreen> {
     } catch (_) {
       if (mounted) setState(() => _loading = false);
     }
+  }
+
+  String _recordTitle(Map<String, dynamic> record) {
+    final title = record['title'] as String?;
+    if (title != null && title.trim().isNotEmpty) return title.trim();
+
+    final parts = _practiceModeParts(record);
+    if (parts.length >= 3 && parts[2].trim().isNotEmpty) return parts[2].trim();
+    return '自定义题目';
+  }
+
+  String _recordQuestionType(Map<String, dynamic> record) {
+    final type = record['question_type'] as String?;
+    if (type != null && type.trim().isNotEmpty) return type.trim();
+
+    final parts = _practiceModeParts(record);
+    if (parts.length >= 2 && parts[1].trim().isNotEmpty) return parts[1].trim();
+    return '自定义批改';
+  }
+
+  List<String> _practiceModeParts(Map<String, dynamic> record) {
+    final mode = record['practice_mode'] as String? ?? '';
+    return mode.split('·');
   }
 
   @override void dispose() { _scrollCtrl.dispose(); super.dispose(); }
@@ -170,12 +197,34 @@ class _HistoryScreenState extends State<HistoryScreen> {
         ]),
         children: [
           const SizedBox(height: 4),
-          SizedBox(width: double.infinity, height: 34, child: OutlinedButton.icon(
-            icon: const Icon(Icons.open_in_new, size: 14),
-            label: const Text('查看题目详情', style: TextStyle(fontSize: 12)),
-            onPressed: () => _openQuestionDetail(group),
-            style: OutlinedButton.styleFrom(foregroundColor: const Color(0xFF6C5CE7)),
-          )),
+          if (group.isCustom)
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: const Color(0xFF00B894).withOpacity(0.06),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Row(
+                children: [
+                  Icon(Icons.upload_file_rounded, size: 16, color: Color(0xFF00B894)),
+                  SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      '自定义上传题目，题干、得分和建议保存在下方批改记录中',
+                      style: TextStyle(fontSize: 12, color: Color(0xFF00B894)),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          else
+            SizedBox(width: double.infinity, height: 34, child: OutlinedButton.icon(
+              icon: const Icon(Icons.open_in_new, size: 14),
+              label: const Text('查看题目详情', style: TextStyle(fontSize: 12)),  
+              onPressed: () => _openQuestionDetail(group),
+              style: OutlinedButton.styleFrom(foregroundColor: const Color(0xFF6C5CE7)),
+            )),
           const SizedBox(height: 8),
           _AttemptTabs(group: group),
         ],
@@ -415,6 +464,8 @@ class _QuestionGroup {
   final String questionType;
   final String referenceAnswer;
   final List<Map<String, dynamic>> attempts = [];
+
+  bool get isCustom => questionId.startsWith('custom_');
 
   _QuestionGroup({
     required this.questionId,

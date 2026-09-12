@@ -689,7 +689,7 @@ class _ApiKeyTutorialPageState extends State<_ApiKeyTutorialPage> {
             ),
             child: const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               _FeeItem('注册赠送', '新用户注册即送 500 万 tokens 免费额度'),
-              _FeeItem('收费标准', 'deepseek-chat 模型：￥1 / 百万 tokens（约 60 万汉字）'),
+              _FeeItem('收费标准', 'deepseek-v4-flash 模型：￥1 / 百万 tokens（约 60 万汉字）'),
               _FeeItem('一篇申论', '评分一次约消耗 2000-4000 tokens，约 ￥0.002-0.004'),
               _FeeItem('月均花费', '按每天练习 5 题计算，月均约 ￥0.3-0.6'),
               _FeeItem('充值门槛', '最低充值 ￥10，余额长期有效'),

@@ -1,4 +1,4 @@
-/// 习主席讲话详情页 — 全文展示 + AI 总结 + 复制 + 导入积累本
+﻿/// 习主席讲话详情页 — 全文展示 + AI 总结 + 复制 + 导入积累本
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -208,7 +208,7 @@ class _XjpSpeechDetailScreenState extends State<XjpSpeechDetailScreen> {
         'Authorization': 'Bearer $apiKey',
       },
       body: jsonEncode({
-        'model': 'deepseek-chat',
+        'model': 'deepseek-v4-flash',
         'messages': [
           {
             'role': 'system',

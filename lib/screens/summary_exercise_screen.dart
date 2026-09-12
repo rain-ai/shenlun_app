@@ -119,7 +119,7 @@ class _SummaryExerciseScreenState extends State<SummaryExerciseScreen>
       final r = await http.post(Uri.parse('https://api.deepseek.com/v1/chat/completions'),
         headers: {'Content-Type':'application/json','Authorization':'Bearer $key'},
         body: jsonEncode({
-          'model':'deepseek-chat','messages':[{'role':'user','content':'根据留言长度计算合理的概括、对策、回复概括字数限制。只返回JSON不要其他文字。\n留言(${comment.length}字)：$comment\n\n{"summary":数字,"counter":数字,"reply":数字}'}],
+          'model':'deepseek-v4-flash','messages':[{'role':'user','content':'根据留言长度计算合理的概括、对策、回复概括字数限制。只返回JSON不要其他文字。\n留言(${comment.length}字)：$comment\n\n{"summary":数字,"counter":数字,"reply":数字}'}],
           'temperature':0.1,'max_tokens':80,
         }),
       ).timeout(const Duration(seconds: 6));
@@ -168,7 +168,7 @@ class _SummaryExerciseScreenState extends State<SummaryExerciseScreen>
     try {
       final r = await http.post(Uri.parse('https://api.deepseek.com/v1/chat/completions'),
         headers: {'Content-Type':'application/json','Authorization':'Bearer $key'},
-        body: jsonEncode({'model':'deepseek-chat','messages':[{'role':'user','content':prompt}],'temperature':0.5,'max_tokens':300}),
+        body: jsonEncode({'model':'deepseek-v4-flash','messages':[{'role':'user','content':prompt}],'temperature':0.5,'max_tokens':300}),
       ).timeout(const Duration(seconds: 12));
       if (r.statusCode == 200) {
         final ans = jsonDecode(r.body)['choices']?[0]?['message']?['content'] as String? ?? '';
@@ -260,7 +260,7 @@ class _SummaryExerciseScreenState extends State<SummaryExerciseScreen>
       final r = await http.post(Uri.parse('https://api.deepseek.com/v1/chat/completions'),
         headers: {'Content-Type':'application/json','Authorization':'Bearer $key'},
         body: jsonEncode({
-          'model':'deepseek-chat','messages':[{'role':'user','content':prompt}],
+          'model':'deepseek-v4-flash','messages':[{'role':'user','content':prompt}],
           'temperature':0.3,'max_tokens':200,
         }),
       ).timeout(const Duration(seconds: 15));

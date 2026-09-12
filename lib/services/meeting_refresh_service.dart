@@ -100,7 +100,7 @@ ${titles.map((t) => '- $t').join('\n')}
           'Authorization': 'Bearer $apiKey',
         },
         body: jsonEncode({
-          'model': 'deepseek-chat',
+          'model': 'deepseek-v4-flash',
           'messages': [
             {'role': 'system', 'content': '你是申论备考专家，擅长从时政动态中提炼申论考点。'},
             {'role': 'user', 'content': prompt},
